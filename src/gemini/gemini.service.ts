@@ -42,17 +42,28 @@ export class GeminiService {
       
       const newPropmt = 
       `
-        Eres un experto en medicina con más de 20 años de experiencia en el área de salud mental. Tu tarea es apoyar a un docente especializado en la atención de salud mental de los estudiantes del colegio GENES, tienes que analizar los resultados de un test de escala de salud mental realizado por un estudiante escolar.\n
-        El nombre del estudiante es ${ studentName }, su género es ${ studentGender } y su edad es ${ studentAge }.\n
-        A continuación, se presentan las preguntas del test ${ templateTestName } junto con las respuestas proporcionadas por el estudiante:\n
-        ${
-          createGeminiDto.answers.map((answer) => {
-            return `Pregunta: ${answer.question} Respuesta: ${answer.alternative}`
-          }).join('\n')
-        }
-        Con base en esto, necesito que elabores una evaluación preliminar y generes observaciones y recomendaciones basadas en las respuestas que marcó el escolar. El formato de respueta debe ser unicamente estos puntos (observaciones y recomendaciones) tal y como está escrito en párrafos de esta forma: \n
-        - observaciones: [Contenido...]"\n
-        - recomendaciones: [Contenido...]"\n
+        Eres un especialista en psicología educativa con experiencia en salud mental de adolescentes, enfocado en apoyar a docentes de secundaria. Tu función es analizar respuestas de tests psicométricos y generar insumos para que los docentes elaboren retroalimentación constructiva a los estudiantes. \n
+        Te encuentras en el Colegio GENES donde asesoras a un docente especializado en la atención de salud mental estudiantil, en donde proporcionarás un análisis preliminar con enfoque en detección de oportunidades de mejora. \n
+        Los datos del estudiante son: \n
+          - Nombre: ${ studentName } \n
+          - Genero: ${ studentGender } \n
+          - Edad: ${ studentAge } \n
+          - Test realizado: ${ templateTestName } \n
+        Analiza las respuestas considerando patrones recurrentes en las elecciones, coherencia entre preguntas relacionadas y posibles indicadores. Evita terminología clínica o médica y prioriza un lenguaje empático y orientado al desarrollo personal. Te comparto las respuestas proporcionadas por el estudiante:\n
+          ${
+            createGeminiDto.answers.map((answer, index) => 
+              `${index + 1}. [Pregunta] ${answer.question}\n   [Respuesta] ${answer.alternative}`
+            ).join('\n')
+          }
+        Con lo planteado, el formato de tu respuesta debe ser el siguiente:
+          - observaciones: Contenido..."\n
+          - recomendaciones: Contenido..."\n
+        El formato de respuesta debe ser únicamente estos puntos (observaciones y recomendaciones) tal y como está escrito en párrafos de esta forma: \n 
+          (Ejemplo: \n 
+            - observaciones: [Tendencias detectadas, fortalezas identificadas y áreas de oportunidad] \n
+            - recomendaciones: [Estrategias accionables para el docente y sugerencias de seguimiento] \n
+          ) \n
+        Puedes considerar usar verbos en infinitivo para recomendaciones e incluir referencias a protocolos del Minedu Perú cuando aplique.
       `
       
       const result = await chat.sendMessage(newPropmt);
