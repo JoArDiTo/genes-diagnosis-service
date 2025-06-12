@@ -3,6 +3,7 @@ import { CreateGeminiDto } from './dto/create-gemini.dto';
 import { ChatSession, GenerativeModel, GoogleGenerativeAI } from '@google/generative-ai';
 import { envs } from 'src/config/envs';
 import { RpcException } from '@nestjs/microservices';
+import { CreateValidationDto } from './dto/create-validation';
 
 const GEMINI_MODEL = 'gemini-2.0-flash';
 
@@ -40,7 +41,7 @@ export class GeminiService {
     try {
       const { sessionId, chat } = await this.getChatSession(createGeminiDto.sessionId ?? '');
       
-      const newPropmt = 
+      const prompt = 
       `
         Eres un especialista en psicología educativa con experiencia en salud mental de adolescentes, enfocado en apoyar a docentes de secundaria. Tu función es analizar respuestas de tests psicométricos y generar insumos para que los docentes elaboren retroalimentación constructiva a los estudiantes. \n
         Te encuentras en el Colegio GENES donde asesoras a un docente especializado en la atención de salud mental estudiantil, en donde proporcionarás un análisis preliminar con enfoque en detección de oportunidades de mejora. \n
@@ -56,30 +57,25 @@ export class GeminiService {
             ).join('\n')
           }
         Con lo planteado, el formato de tu respuesta debe ser el siguiente:
-          - observaciones: Contenido..."\n
-          - recomendaciones: Contenido..."\n
-        El formato de respuesta debe ser únicamente estos puntos (observaciones y recomendaciones) tal y como está escrito en párrafos de esta forma: \n 
+          - observaciones: Contenido en párrafos..."\n
+        El formato de respuesta debe tener exclusivamente el punto de observaciones, tal y como está escrito en párrafos de esta forma: \n 
           (Ejemplo: \n 
-            - observaciones: [Tendencias detectadas, fortalezas identificadas y áreas de oportunidad] \n
-            - recomendaciones: [Estrategias accionables para el docente y sugerencias de seguimiento] \n
+            - observaciones: [Fortalezas y Debilidades identificadas, áreas de oportunidad, estrategias accionables para el docente, y sugerencias de seguimiento] \n
           ) \n
-        Puedes considerar usar verbos en infinitivo para recomendaciones e incluir referencias a protocolos del Minedu Perú cuando aplique.
-      `
+        Puedes considerar usar verbos en infinitivo para recomendaciones e incluir referencias a protocolos del Ministerio de educación del Perú cuando aplique.
+      `;
       
-      const result = await chat.sendMessage(newPropmt);
+      const result = await chat.sendMessage(prompt);
       const text = result.response.text();
       
       // Procesar el texto para extraer observaciones y recomendaciones
-      const observationsMatch = text.match(/- observaciones:\s*(.+?)(?=- recomendaciones:)/s);
-      const recommendationsMatch = text.match(/- recomendaciones:\s*(.+)/s);
+      const observationsMatch = text.match(/- observaciones:\s*([\s\S]*)/);
 
       const observations = observationsMatch ? observationsMatch[1].trim() : 'No se encontraron observaciones.';
-      const recommendations = recommendationsMatch ? recommendationsMatch[1].trim() : 'No se encontraron recomendaciones.';
 
       return {
         sessionId,
         observations,
-        recommendations,
       };
     } catch (error) {
       throw new RpcException({
@@ -87,5 +83,42 @@ export class GeminiService {
         message: 'Error al generar el diagnóstico',
       })
     }
+  }
+
+  async getContentValidation(createValidationDto: CreateValidationDto) {
+    const { sessionId, chat } = await this.getChatSession(createValidationDto.sessionId ?? '');
+
+    const { studentName, templateTestName, content } = createValidationDto;
+    // Con el sesiónId, continua la conversación con el modelo
+    const prompt = 
+    `
+      Continuamos la asesoría en el Colegio GENES, enfocados en la salud mental y el desarrollo personal de estudiantes de secundaria. Esta sesión corresponde a la revisión y validación del análisis preliminar generado previamente, utilizando la siguiente información de contexto: \n
+        - Nombre del estudiante: ${studentName} \n
+        - Test realizado: ${templateTestName} \n
+      A continuación, el docente especialista ha proporcionado su análisis desde el sistema con el siguiente contenido: \n
+      ${content} \n
+      Tu función es: \n
+        1. Validar la coherencia entre el análisis inicial que realizaste y las observaciones del docente. \n
+        2. Identificar coincidencias, diferencias o aportes relevantes en la retroalimentación del docente. \n
+        3. Proponer ajustes o recomendaciones adicionales si se detectan oportunidades de mejora en el análisis o en la intervención sugerida. \n
+      El formato de tu respuesta debe tener exclusivamente el siguiente punto: \n
+        - validacion: [Síntesis de coincidencias y diferencias entre el análisis inicial y los comentarios del docente, Sugerencias de ajuste o profundización en la retroalimentación, si corresponde, en caso de estar correcto y sintetizado, puedes indicar que no hay mejoras.] \n
+      Un ejemplo de respuesta sería: \n
+       - validacion: Se encontraron coincidencias en las áreas de oportunidad identificadas en el análisis inicial y los comentarios del docente.
+
+    Utiliza un lenguaje empático, orientado al desarrollo personal y evita terminología clínica. Si es pertinente, menciona protocolos del Ministerio de Educación del Perú. Responde únicamente en el formato solicitado.
+    `
+
+    const result = await chat.sendMessage(prompt);
+    const text = result.response.text();
+
+    // Expresion regular para extraer la validación
+    const validationMatch = text.match(/- validaci[oó]n:\s*([\s\S]*)/i);
+    const validation = validationMatch ? validationMatch[1].trim() : 'No se encontró validación.';
+
+    return {
+      sessionId,
+      validation,
+    };
   }
 }

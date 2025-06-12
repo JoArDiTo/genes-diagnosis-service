@@ -211,8 +211,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.7.0
-   * Query Engine version: 3cff47a7f5d65c3ea74883f1d736e41d68ce91ed
+   * Prisma Client JS version: 6.9.0
+   * Query Engine version: 81e4af48011447c3cc503a190e86995b66d2a28e
    */
   export type PrismaVersion = {
     client: string
@@ -883,7 +883,6 @@ export namespace Prisma {
     id: string | null
     testPerformedId: string | null
     analysis: string | null
-    recommendation: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -892,7 +891,6 @@ export namespace Prisma {
     id: string | null
     testPerformedId: string | null
     analysis: string | null
-    recommendation: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -901,7 +899,6 @@ export namespace Prisma {
     id: number
     testPerformedId: number
     analysis: number
-    recommendation: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -912,7 +909,6 @@ export namespace Prisma {
     id?: true
     testPerformedId?: true
     analysis?: true
-    recommendation?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -921,7 +917,6 @@ export namespace Prisma {
     id?: true
     testPerformedId?: true
     analysis?: true
-    recommendation?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -930,7 +925,6 @@ export namespace Prisma {
     id?: true
     testPerformedId?: true
     analysis?: true
-    recommendation?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -1012,7 +1006,6 @@ export namespace Prisma {
     id: string
     testPerformedId: string
     analysis: string
-    recommendation: string
     createdAt: Date
     updatedAt: Date
     _count: ObservationCountAggregateOutputType | null
@@ -1038,7 +1031,6 @@ export namespace Prisma {
     id?: boolean
     testPerformedId?: boolean
     analysis?: boolean
-    recommendation?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["observation"]>
@@ -1047,7 +1039,6 @@ export namespace Prisma {
     id?: boolean
     testPerformedId?: boolean
     analysis?: boolean
-    recommendation?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["observation"]>
@@ -1056,7 +1047,6 @@ export namespace Prisma {
     id?: boolean
     testPerformedId?: boolean
     analysis?: boolean
-    recommendation?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["observation"]>
@@ -1065,12 +1055,11 @@ export namespace Prisma {
     id?: boolean
     testPerformedId?: boolean
     analysis?: boolean
-    recommendation?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ObservationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "testPerformedId" | "analysis" | "recommendation" | "createdAt" | "updatedAt", ExtArgs["result"]["observation"]>
+  export type ObservationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "testPerformedId" | "analysis" | "createdAt" | "updatedAt", ExtArgs["result"]["observation"]>
 
   export type $ObservationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Observation"
@@ -1079,7 +1068,6 @@ export namespace Prisma {
       id: string
       testPerformedId: string
       analysis: string
-      recommendation: string
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["observation"]>
@@ -1508,7 +1496,6 @@ export namespace Prisma {
     readonly id: FieldRef<"Observation", 'String'>
     readonly testPerformedId: FieldRef<"Observation", 'String'>
     readonly analysis: FieldRef<"Observation", 'String'>
-    readonly recommendation: FieldRef<"Observation", 'String'>
     readonly createdAt: FieldRef<"Observation", 'DateTime'>
     readonly updatedAt: FieldRef<"Observation", 'DateTime'>
   }
@@ -1895,7 +1882,6 @@ export namespace Prisma {
     id: 'id',
     testPerformedId: 'testPerformedId',
     analysis: 'analysis',
-    recommendation: 'recommendation',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -1976,7 +1962,6 @@ export namespace Prisma {
     id?: StringFilter<"Observation"> | string
     testPerformedId?: StringFilter<"Observation"> | string
     analysis?: StringFilter<"Observation"> | string
-    recommendation?: StringFilter<"Observation"> | string
     createdAt?: DateTimeFilter<"Observation"> | Date | string
     updatedAt?: DateTimeFilter<"Observation"> | Date | string
   }
@@ -1985,7 +1970,6 @@ export namespace Prisma {
     id?: SortOrder
     testPerformedId?: SortOrder
     analysis?: SortOrder
-    recommendation?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -1997,7 +1981,6 @@ export namespace Prisma {
     NOT?: ObservationWhereInput | ObservationWhereInput[]
     testPerformedId?: StringFilter<"Observation"> | string
     analysis?: StringFilter<"Observation"> | string
-    recommendation?: StringFilter<"Observation"> | string
     createdAt?: DateTimeFilter<"Observation"> | Date | string
     updatedAt?: DateTimeFilter<"Observation"> | Date | string
   }, "id">
@@ -2006,7 +1989,6 @@ export namespace Prisma {
     id?: SortOrder
     testPerformedId?: SortOrder
     analysis?: SortOrder
-    recommendation?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: ObservationCountOrderByAggregateInput
@@ -2021,7 +2003,6 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Observation"> | string
     testPerformedId?: StringWithAggregatesFilter<"Observation"> | string
     analysis?: StringWithAggregatesFilter<"Observation"> | string
-    recommendation?: StringWithAggregatesFilter<"Observation"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Observation"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Observation"> | Date | string
   }
@@ -2030,7 +2011,6 @@ export namespace Prisma {
     id?: string
     testPerformedId: string
     analysis: string
-    recommendation: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -2039,7 +2019,6 @@ export namespace Prisma {
     id?: string
     testPerformedId: string
     analysis: string
-    recommendation: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -2048,7 +2027,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     testPerformedId?: StringFieldUpdateOperationsInput | string
     analysis?: StringFieldUpdateOperationsInput | string
-    recommendation?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2057,7 +2035,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     testPerformedId?: StringFieldUpdateOperationsInput | string
     analysis?: StringFieldUpdateOperationsInput | string
-    recommendation?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2066,7 +2043,6 @@ export namespace Prisma {
     id?: string
     testPerformedId: string
     analysis: string
-    recommendation: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -2075,7 +2051,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     testPerformedId?: StringFieldUpdateOperationsInput | string
     analysis?: StringFieldUpdateOperationsInput | string
-    recommendation?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2084,7 +2059,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     testPerformedId?: StringFieldUpdateOperationsInput | string
     analysis?: StringFieldUpdateOperationsInput | string
-    recommendation?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2119,7 +2093,6 @@ export namespace Prisma {
     id?: SortOrder
     testPerformedId?: SortOrder
     analysis?: SortOrder
-    recommendation?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -2128,7 +2101,6 @@ export namespace Prisma {
     id?: SortOrder
     testPerformedId?: SortOrder
     analysis?: SortOrder
-    recommendation?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -2137,7 +2109,6 @@ export namespace Prisma {
     id?: SortOrder
     testPerformedId?: SortOrder
     analysis?: SortOrder
-    recommendation?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }

@@ -7,6 +7,4 @@ export class CreateObservationDto {
   @IsString()
   analysis: string;
 
-  @IsString()
-  recommendation: string;
 }

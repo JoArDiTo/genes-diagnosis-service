@@ -19,7 +19,6 @@ model Observation {
   id              String   @id @default(uuid())
   testPerformedId String   @map("test_performed_id")
   analysis        String
-  recommendation  String
   createdAt       DateTime @default(now()) @map("created_at")
   updatedAt       DateTime @updatedAt @map("updated_at")
 }
