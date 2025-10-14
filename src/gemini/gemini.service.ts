@@ -49,8 +49,8 @@ export class GeminiService {
           - Nombre: ${ studentName } \n
           - Genero: ${ studentGender } \n
           - Edad: ${ studentAge } \n
-          - Test realizado: ${ templateTestName } \n
-        Analiza las respuestas considerando patrones recurrentes en las elecciones, coherencia entre preguntas relacionadas y posibles indicadores. Evita terminología clínica o médica y prioriza un lenguaje empático y orientado al desarrollo personal. Te comparto las respuestas proporcionadas por el estudiante:\n
+        El Test que realizó el estudiante es el ${ templateTestName }, su descripción/objetivos es: ${ createGeminiDto.templateTestDescription } \n
+        Enfócate en los objetivos del tomado y analiza las respuestas considerando patrones recurrentes en las elecciones, coherencia entre preguntas relacionadas y posibles indicadores. Evita terminología clínica o médica y prioriza un lenguaje empático y orientado al desarrollo personal. Te comparto las respuestas proporcionadas por el estudiante:\n
           ${
             createGeminiDto.answers.map((answer, index) => 
               `${index + 1}. [Pregunta] ${answer.question}\n   [Respuesta] ${answer.alternative}`
@@ -64,6 +64,8 @@ export class GeminiService {
           ) \n
         Puedes considerar usar verbos en infinitivo para recomendaciones e incluir referencias a protocolos del Ministerio de educación del Perú cuando aplique.
       `;
+
+      console.log(prompt)
       
       const result = await chat.sendMessage(prompt);
       const text = result.response.text();
