@@ -5,7 +5,7 @@ import { envs } from 'src/config/envs';
 import { RpcException } from '@nestjs/microservices';
 import { CreateValidationDto } from './dto/create-validation';
 
-const GEMINI_MODEL = 'gemini-2.0-flash';
+const GEMINI_MODEL = 'gemini-3.5-flash';
 
 @Injectable()
 export class GeminiService {
