@@ -80,7 +80,7 @@ export class GeminiService {
         observations,
       };
     } catch (error: any) {
-      console.error('ERROR REAL GEMINI:', {
+      console.error('ERROR REAL GEMINI VALIDATION:', {
         message: error?.message,
         status: error?.status,
         code: error?.code,
@@ -89,8 +89,11 @@ export class GeminiService {
         stack: error?.stack,
       });
 
-      throw new Error(error?.message || 'Error al generar el diagnóstico');
+      throw new InternalServerErrorException(
+        error?.message || 'Error al validar el diagnóstico',
+      );
     }
+  }
 
   async getContentValidation(createValidationDto: CreateValidationDto) {
     const { sessionId, chat } = await this.getChatSession(createValidationDto.sessionId ?? '');
