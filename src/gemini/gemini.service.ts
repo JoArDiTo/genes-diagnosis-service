@@ -79,13 +79,18 @@ export class GeminiService {
         sessionId,
         observations,
       };
-    } catch (error) {
-      throw new RpcException({
-        status: 500,
-        message: 'Error al generar el diagnóstico',
-      })
+    } catch (error: any) {
+      console.error('ERROR REAL GEMINI:', {
+        message: error?.message,
+        status: error?.status,
+        code: error?.code,
+        details: error?.details,
+        response: error?.response,
+        stack: error?.stack,
+      });
+
+      throw new Error(error?.message || 'Error al generar el diagnóstico');
     }
-  }
 
   async getContentValidation(createValidationDto: CreateValidationDto) {
     const { sessionId, chat } = await this.getChatSession(createValidationDto.sessionId ?? '');
