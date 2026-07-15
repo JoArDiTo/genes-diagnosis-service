@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException  } from '@nestjs/common';
 import { CreateGeminiDto } from './dto/create-gemini.dto';
 import { ChatSession, GenerativeModel, GoogleGenerativeAI } from '@google/generative-ai';
 import { envs } from 'src/config/envs';
